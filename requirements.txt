@@ -1,12 +1,11 @@
 # TCP Multi-Client Chat Application
 # Computer Networks Lab (CNL) Project
 #
-# All core networking, multithreading, logging, and GUI modules
+# All core networking, multithreading, and logging modules
 # are part of the standard Python 3 standard library:
 # - socket (Socket programming)
 # - threading (Concurrent multi-client connection management)
 # - logging (Persistent server and chat event logging)
-# - tkinter (Desktop GUI client)
 # - json (Persistent configuration and ban list serialization)
 #
 # Python Version: >= 3.8

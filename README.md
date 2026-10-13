@@ -19,7 +19,7 @@ It satisfies all standard curriculum requirements for the **Computer Networks La
 - **Server Response & Status Notifications:** Connection acknowledgments, join/leave notices, error notifications.
 - **Administrative Controls:** Dedicated admin login, user kicking (`/kick`), persistent IP/nickname banning (`/ban`), and unbanning (`/unban`).
 - **Persistent Chat & Server Logs:** Dual-level logging recording network events in `logs/server.log` and message histories in `logs/chat_history.log`.
-- **Dual Client Interfaces:** Both a modern CLI client (`client.py`) and a dark-mode Desktop GUI client (`gui_client.py` using standard Tkinter).
+- **Terminal Client Interface:** Fast, lightweight, cross-platform CLI client (`client.py`) with ANSI color-coded tags and non-blocking input handling.
 
 ---
 
@@ -37,9 +37,9 @@ graph TD
         BAN["Ban Enforcement (banned_users.json)"]
     end
 
-    ClientA["Client A (CLI/GUI)"] <--> |TCP Stream| T1
-    ClientB["Client B (CLI/GUI)"] <--> |TCP Stream| T2
-    ClientC["Client C (CLI/GUI)"] <--> |TCP Stream| T3
+    ClientA["Client A (Terminal CLI)"] <--> |TCP Stream| T1
+    ClientB["Client B (Terminal CLI)"] <--> |TCP Stream| T2
+    ClientC["Client C (Terminal CLI)"] <--> |TCP Stream| T3
 
     T1 --> REG
     T2 --> REG
@@ -59,7 +59,7 @@ graph TD
 | **Messaging** | Public broadcast, Direct Private Messaging (`/msg <user> <text>`), online list (`/users`) |
 | **Administration** | Admin credentials check, `/kick <user>`, persistent `/ban <user>`, `/unban <user>`, `/banned` list |
 | **Logging** | ISO timestamps, automated event logging to file (`server.log`, `chat_history.log`), server terminal color output |
-| **User Interfaces** | 1. Terminal CLI (`client.py`) with colored tags<br>2. Tkinter Desktop GUI (`gui_client.py`) with dark theme |
+| **User Interface** | Pure Terminal CLI (`client.py`) with colored ANSI tags and background receive thread |
 
 ---
 
@@ -69,7 +69,6 @@ graph TD
 TCP Chat/
 ├── server.py              # Multithreaded TCP Server
 ├── client.py              # Interactive Command-Line Interface (CLI) Client
-├── gui_client.py          # Modern Dark-Themed Desktop GUI Client (Tkinter)
 ├── config.py              # Central network configuration & parameters
 ├── utils.py               # Protocol helpers, timestamps, logging setup
 ├── test_chat.py           # Automated end-to-end integration test
@@ -77,7 +76,6 @@ TCP Chat/
 ├── requirements.txt       # Dependencies info (100% Python Standard Library)
 ├── run_server.bat         # 1-Click launcher for Server (Windows)
 ├── run_client.bat         # 1-Click launcher for CLI Client (Windows)
-├── run_gui_client.bat     # 1-Click launcher for GUI Client (Windows)
 ├── README.md              # Project documentation and Viva Voce preparation
 ├── PROJECT_REPORT.md      # Formal academic CNL laboratory report
 └── logs/
@@ -95,7 +93,7 @@ TCP Chat/
 
 ### Option 1: 1-Click Windows Launchers
 1. Double-click `run_server.bat` to launch the server in a terminal.
-2. Double-click `run_client.bat` or `run_gui_client.bat` to open clients.
+2. Double-click `run_client.bat` to open client terminal windows.
 3. Open multiple clients to test group chat, private messaging, and admin controls!
 
 ### Option 2: Terminal Execution
@@ -106,17 +104,17 @@ python server.py
 ```
 *(Optionally specify host and port: `python server.py 127.0.0.1 5555`)*
 
-**Step 2: Start Client 1 (CLI)**
+**Step 2: Start Client 1 (Terminal)**
 ```bash
 python client.py
 ```
 Enter your desired nickname (e.g., `Alice`).
 
-**Step 3: Start Client 2 (GUI)**
+**Step 3: Start Client 2 (Terminal)**
 ```bash
-python gui_client.py
+python client.py
 ```
-Enter the server IP (`127.0.0.1`), Port (`5555`), and a nickname (e.g., `Bob`), then click **Connect**.
+Enter your desired nickname (e.g., `Bob`).
 
 **Step 4: Connect as Administrator (Optional)**
 - Nickname: `admin`

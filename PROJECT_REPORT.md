@@ -8,7 +8,7 @@
 ## 1. ABSTRACT
 In modern computer networks, inter-process communication (IPC) across distributed endpoints forms the backbone of digital interaction. This laboratory project presents the design, architectural analysis, and implementation of a multithreaded, real-time client-server chat system constructed using Python's socket interface over the Transmission Control Protocol (TCP/IP stack). 
 
-The system provides reliable full-duplex message transmission, dynamic multi-client connection management, broadcast and unicast (direct messaging) routing, role-based administrative authority (kick and IP/nickname ban policies), and persistent event and communication logging. A dual-interface approach—incorporating both a lightweight command-line interface (CLI) and an intuitive Tkinter graphical user interface (GUI)—provides an educational showcase of transport layer socket abstractions, concurrent thread synchronization, and application-layer protocol framing.
+The system provides reliable full-duplex message transmission, dynamic multi-client connection management, broadcast and unicast (direct messaging) routing, role-based administrative authority (kick and IP/nickname ban policies), and persistent event and communication logging. A streamlined command-line interface (CLI) approach provides an educational showcase of transport layer socket abstractions, concurrent thread synchronization, and application-layer protocol framing directly within the terminal.
 
 ---
 
@@ -27,7 +27,7 @@ Designing an interactive real-time multi-user communication system requires addr
 * To implement full-duplex client communication allowing concurrent sending and receiving.
 * To provide broadcast distribution, unicast direct messaging (`/msg`), and administrative access (`/kick`, `/ban`, `/unban`).
 * To record network events in `logs/server.log` and message exchanges in `logs/chat_history.log`.
-* To deploy both CLI and GUI desktop client frontends using standard libraries.
+* To deploy an interactive terminal CLI client frontend using standard libraries.
 
 ---
 
@@ -98,8 +98,8 @@ flowchart TD
 
     subgraph Clients ["Connected Clients"]
         CLI1["Client 1 (Alice - CLI)"]
-        GUI1["Client 2 (Bob - GUI)"]
-        AdminGUI["Client 3 (Admin - CLI/GUI)"]
+        CLI2["Client 2 (Bob - CLI)"]
+        AdminCLI["Client 3 (Admin - CLI)"]
     end
 
     SocketBind --> AcceptLoop
@@ -109,8 +109,8 @@ flowchart TD
     Registry <--> BanStore
 
     CLI1 <--->|TCP Stream| Spawn
-    GUI1 <--->|TCP Stream| Spawn
-    AdminGUI <--->|TCP Stream| Spawn
+    CLI2 <--->|TCP Stream| Spawn
+    AdminCLI <--->|TCP Stream| Spawn
 ```
 
 ### 4.2 Application Layer Protocol Specification (Framing)
@@ -141,7 +141,6 @@ TCP treats data as a continuous stream of raw bytes. To eliminate message concat
 |---|---|---|
 | [server.py](file:///c:/Users/ombha/OneDrive/Desktop/Project/TCP%20Chat/server.py) | Multithreaded TCP Server | `socket`, `threading.Thread`, `threading.Lock`, broadcast algorithm, ban manager |
 | [client.py](file:///c:/Users/ombha/OneDrive/Desktop/Project/TCP%20Chat/client.py) | Interactive CLI Client | Non-blocking dual-threaded I/O, masked password input via `getpass`, ANSI coloring |
-| [gui_client.py](file:///c:/Users/ombha/OneDrive/Desktop/Project/TCP%20Chat/gui_client.py) | Desktop GUI Client | Pure `tkinter`, dark mode palette, color-coded tag buffers, thread-safe `root.after()` dispatch |
 | [config.py](file:///c:/Users/ombha/OneDrive/Desktop/Project/TCP%20Chat/config.py) | System Configuration | Host, port, buffer size (4096 bytes), credentials, file paths |
 | [utils.py](file:///c:/Users/ombha/OneDrive/Desktop/Project/TCP%20Chat/utils.py) | Shared Utility Services | Formatted timestamps, unified logging setup, terminal ANSI styling |
 | [test_chat.py](file:///c:/Users/ombha/OneDrive/Desktop/Project/TCP%20Chat/test_chat.py) | Automated Testing Suite | Subprocess orchestration, end-to-end socket testing, broadcast & unicast assertions |
